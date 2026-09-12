@@ -1,0 +1,11 @@
+version = 1
+
+[[workspaces]]
+id = "project-herdr"
+name = "Project Herdr"
+kind = "control-plane"
+remote = "git@github.com:oldwinter/project-herdr.git"
+default_harness = "grok"
+entry = "just start"
+forbid_product_edits_from_coordinator = true
+notes = "Coordinator contracts, receipts, and inbox live here. Product code does not."

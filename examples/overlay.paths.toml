@@ -1,0 +1,5 @@
+device = "example-device"
+
+[paths]
+project-herdr = "/absolute/path/to/project-herdr"
+dev-workbench = "/absolute/path/to/dev-workbench"

@@ -1,0 +1,29 @@
+# Generic shape for a personal control plane. Copy into
+# control/workspaces.local.toml and point overlays at real checkouts.
+
+version = 1
+
+[[workspaces]]
+id = "control"
+name = "Coordinator"
+kind = "control-plane"
+remote = "git@github.com:example/project-herdr.git"
+default_harness = "grok"
+entry = "just start"
+
+[[workspaces]]
+id = "product"
+name = "Product"
+kind = "product"
+remote = "git@github.com:example/product.git"
+default_harness = "codex"
+entry = "just test"
+forbid_product_edits_from_coordinator = true
+
+[[workspaces]]
+id = "notes"
+name = "Notes vault"
+kind = "knowledge"
+remote = "git@github.com:example/notes.git"
+default_harness = "grok"
+entry = "just start"

@@ -1,0 +1,113 @@
+from __future__ import annotations
+
+import io
+import json
+import tempfile
+import unittest
+from contextlib import redirect_stdout
+from pathlib import Path
+
+from project_herdr.cli import main
+from support import make_root, write_overlay
+
+
+class CliTest(unittest.TestCase):
+    def test_workspaces_json(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = make_root(Path(tmp))
+            payload = self._run(
+                ["--root", str(root.root), "workspaces", "--json"]
+            )
+            ids = [row["id"] for row in json.loads(payload)]
+            self.assertEqual(ids, ["project-herdr", "novel"])
+
+    def test_dispatch_create_and_inbox(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = make_root(Path(tmp))
+            created = self._run(
+                [
+                    "--root",
+                    str(root.root),
+                    "--device",
+                    "testdev",
+                    "dispatch",
+                    "create",
+                    "--workspace",
+                    "novel",
+                    "--objective",
+                    "Draft chapter one",
+                    "--ready",
+                ]
+            )
+            dispatch_id = created.split()[0]
+            inbox = self._run(["--root", str(root.root), "--json", "inbox"])
+            self.assertEqual(json.loads(inbox), [])
+            self._run(
+                [
+                    "--root",
+                    str(root.root),
+                    "receipt",
+                    "record",
+                    "--dispatch",
+                    dispatch_id,
+                    "--verdict",
+                    "needs_review",
+                    "--summary",
+                    "Please check the ending",
+                ]
+            )
+            inbox = json.loads(self._run(["--root", str(root.root), "--json", "inbox"]))
+            self.assertEqual(inbox[0]["dispatch_id"], dispatch_id)
+            self.assertEqual(inbox[0]["kind"], "review")
+
+    def test_enqueue_without_path_does_not_touch_product(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            product = base / "novel"
+            product.mkdir()
+            (product / "story.md").write_text("keep\n", encoding="utf-8")
+            root = make_root(base / "control")
+            code = main(
+                [
+                    "--root",
+                    str(root.root),
+                    "--device",
+                    "testdev",
+                    "dispatch",
+                    "create",
+                    "--workspace",
+                    "novel",
+                    "--objective",
+                    "Draft chapter one",
+                    "--enqueue",
+                ]
+            )
+            self.assertEqual(code, 3)
+            self.assertEqual((product / "story.md").read_text(encoding="utf-8"), "keep\n")
+
+    def test_status_uses_overlay(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = make_root(Path(tmp) / "cp")
+            write_overlay(root, "testdev", {"novel": str(Path(tmp) / "missing-novel")})
+            payload = json.loads(
+                self._run(
+                    [
+                        "--root",
+                        str(root.root),
+                        "--device",
+                        "testdev",
+                        "--json",
+                        "status",
+                        "--workspace",
+                        "novel",
+                    ]
+                )
+            )
+            self.assertEqual(payload[0]["path_state"], "missing")
+
+    def _run(self, argv: list[str]) -> str:
+        buffer = io.StringIO()
+        with redirect_stdout(buffer):
+            code = main(argv)
+        self.assertEqual(code, 0, buffer.getvalue())
+        return buffer.getvalue().strip()

@@ -1,0 +1,21 @@
+# Copy to control/workspaces.local.toml (gitignored) to add private workspaces.
+# Local entries override tracked ones with the same id.
+
+version = 1
+
+[[workspaces]]
+id = "general-tasks"
+name = "Personal AI Control Plane"
+kind = "control-plane"
+remote = "git@github.com:oldwinter/general-tasks.git"
+default_harness = "grok"
+entry = "just start"
+
+[[workspaces]]
+id = "dev-workbench"
+name = "Dev Workbench"
+kind = "product"
+remote = "git@github.com:oldwinter/dev-workbench.git"
+default_harness = "codex"
+entry = "just test"
+forbid_product_edits_from_coordinator = true
