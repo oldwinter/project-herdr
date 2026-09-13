@@ -20,7 +20,8 @@ from project_herdr.tomlutil import dump_toml, load_toml
 
 WORKER_PROMPT = """# Dispatch {id}
 
-You are a worker, not the coordinator.
+You are a worker, not the coordinator. One dispatch is one workstream: finish
+this objective, report, stop. Do not pick up neighbouring work.
 
 Work only in this workspace:
 
@@ -29,11 +30,23 @@ Work only in this workspace:
 - remote: {remote}
 
 Do not edit the control-plane repository except by recording a receipt with
-`project-herdr receipt record` from the control-plane root.
+`project-herdr receipt record` from the control-plane root, and by writing
+under the output directory below.
 
 ## Objective
 
 {objective}
+
+## Output
+
+- report: `{output_dir}/report.md` (what changed, how it was verified, open questions)
+- other agent-facing files: `{output_dir}/`
+- human deliverables (only if the objective asks for one): `{docs_dir}/`
+- screenshots / recordings: `{media_dir}/`
+
+Shared context lives in `{context_dir}`. If you learn something durable about this
+workspace (how to run its tests, a footgun), write it into the workspace's own
+AGENTS.md; cross-workspace lessons go to `{docs_dir}/lessons.md`.
 
 ## Authorization
 
@@ -53,7 +66,13 @@ Refuse any unauthorized external action.
 When finished, from the control-plane root:
 
 ```
-project-herdr receipt record --dispatch {id} --verdict passed|failed|needs_review|blocked --summary "..."
+project-herdr receipt record --dispatch {id} --verdict passed|failed|needs_review|blocked --summary "..." --evidence {output_dir}/report.md
+```
+
+If you opened a pull request (only with push authorization), attach it:
+
+```
+project-herdr dispatch attach {id} --pr <url>
 ```
 
 Then stop. Do not push, merge, publish, or send unless authorization above is true.
@@ -118,6 +137,7 @@ def load_dispatch(path: Path) -> Dispatch:
         prompt_path=str(payload.get("prompt_path") or ""),
         herdr_requested=bool(payload.get("herdr_requested", False)),
         herdr_result=str(payload.get("herdr_result") or ""),
+        pr_url=str(payload.get("pr_url") or ""),
     )
 
 
@@ -170,6 +190,7 @@ def save_dispatch(root: ControlRoot, item: Dispatch) -> None:
         "prompt_path": item.prompt_path,
         "herdr_requested": item.herdr_requested,
         "herdr_result": item.herdr_result,
+        "pr_url": item.pr_url,
         "authorization": item.authorization.as_dict(),
         "acceptance": {"commands": list(item.acceptance_commands)},
         "writeback": {"receipt_dir": item.writeback_receipt_dir},
@@ -185,6 +206,7 @@ def mark_dispatch(
     herdr_requested: bool | None = None,
     herdr_result: str | None = None,
     prompt_path: str | None = None,
+    pr_url: str | None = None,
 ) -> Dispatch:
     updated = replace(
         item,
@@ -192,6 +214,7 @@ def mark_dispatch(
         herdr_requested=item.herdr_requested if herdr_requested is None else herdr_requested,
         herdr_result=item.herdr_result if herdr_result is None else herdr_result,
         prompt_path=item.prompt_path if prompt_path is None else prompt_path,
+        pr_url=item.pr_url if pr_url is None else pr_url,
     )
     save_dispatch(root, updated)
     return updated
@@ -219,6 +242,10 @@ def write_worker_prompt(
         send=_bool(item.authorization.send),
         delete=_bool(item.authorization.delete),
         acceptance=acceptance,
+        context_dir=_relpath(root.root, root.context_dir),
+        docs_dir=_relpath(root.root, root.context_docs_dir),
+        media_dir=_relpath(root.root, root.context_media_dir),
+        output_dir=_relpath(root.root, root.worker_output_dir(item.id)),
     )
     path.write_text(body, encoding="utf-8")
     return path
