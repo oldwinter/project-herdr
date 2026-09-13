@@ -35,6 +35,14 @@ context *args:
     @{{python}} -m project_herdr --root . context "$@"
 
 [positional-arguments]
+sync *args:
+    @{{python}} -m project_herdr --root . sync "$@"
+
+[positional-arguments]
+lesson *args:
+    @{{python}} -m project_herdr --root . lesson "$@"
+
+[positional-arguments]
 dispatch *args:
     @{{python}} -m project_herdr --root . dispatch "$@"
 

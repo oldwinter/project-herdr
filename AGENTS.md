@@ -22,7 +22,8 @@
 - Herdr 只是可选 transport。没有 Herdr 时把合同标成 `ready` 并留下 worker prompt。
 - 产品仓的测试方法和架构偏好写进那个仓；跨仓教训写 `context/docs/lessons.md`。
 - `control/notes.md` 是给人看的状态读数，由 CLI 从合同和收据重算；不要手改，也不要在里面写流水账。
-- worker 开了 PR 就 `dispatch attach --pr`，让 notes 带链接。
+- worker 开了 PR 就 `dispatch attach --pr`，让 notes 带链接；之后用 `just sync` 把 PR 合并 / 关闭 / CI 失败拉回合同（需要已登录的 `gh`，没有就 fail closed）。
+- 学到跨仓通用的东西用 `just lesson add "..." --workspace <id>`，不要塞进聊天记录。
 - 优化/分角色模型看 `.cursor/rules/pstack-models.mdc`。
 
 ## Canonical Surface
@@ -32,7 +33,8 @@
 - `control/dispatches/`：派工合同
 - `control/receipts/`：回写证据
 - `control/notes.md` / `control/archived.md`：状态读数与已完成归档（生成物）
-- `context/docs/`：人会打开的交付物
+- `context/docs/`：人会打开的交付物；`lessons.md` 是跨仓教训
+- `docs/selftest.md`：自测脚本，改完任何一层先跑一遍
 - `context/internal/<dispatch>/`：worker 报告与 agent 侧证据
 - `context/media/`：截图、录屏
 - `src/project_herdr/`：CLI 与校验真源

@@ -18,6 +18,7 @@ from project_herdr.dispatch import (
 from project_herdr.errors import AdapterError, ProjectHerdrError
 from project_herdr.herdr import HerdrAdapter, default_adapter
 from project_herdr.inbox import build_inbox
+from project_herdr.lessons import add_lesson, lessons_file
 from project_herdr.model import KNOWN_HARNESSES, Authorization, EnqueueRequest
 from project_herdr.notes import write_notes
 from project_herdr.overlay import load_overlay, resolve_workspace_path
@@ -26,6 +27,7 @@ from project_herdr.registry import load_registry, require_workspace
 from project_herdr.render import render_dispatches, render_inbox, render_status, render_workspaces
 from project_herdr.status import collect_status
 from project_herdr.store import ControlRoot
+from project_herdr.sync import sync_dispatches
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -115,6 +117,20 @@ def build_parser() -> argparse.ArgumentParser:
         help="Show the shared-context layout (docs/, internal/, media/).",
         parents=[common],
     )
+    sync = sub.add_parser(
+        "sync",
+        help="Pull PR state (via gh) into dispatches that have a pr_url. Optional; fails closed without gh.",
+        parents=[common],
+    )
+    sync.add_argument("--dry-run", action="store_true", help="Report what would change, write nothing.")
+
+    lesson = sub.add_parser("lesson", help="Shared-context lessons.", parents=[common])
+    lesson_sub = lesson.add_subparsers(dest="lesson_command", required=True)
+    lesson_add = lesson_sub.add_parser(
+        "add", help="Append a cross-workspace lesson to context/docs/lessons.md.", parents=[common]
+    )
+    lesson_add.add_argument("text")
+    lesson_add.add_argument("--workspace", default="", help="Workspace the lesson came from.")
 
     receipt = sub.add_parser("receipt", help="Record writeback evidence.", parents=[common])
     receipt_sub = receipt.add_subparsers(dest="receipt_command", required=True)
@@ -162,6 +178,10 @@ def _dispatch(args: argparse.Namespace) -> int:
         return _notes(args, root)
     if args.command == "context":
         return _context(args, root)
+    if args.command == "sync":
+        return _sync(args, root)
+    if args.command == "lesson":
+        return _lesson(args, root)
     if args.command == "receipt":
         return _receipt_command(args, root)
     raise ProjectHerdrError(f"unknown command {args.command}")
@@ -376,6 +396,31 @@ def _context(args: argparse.Namespace, root: ControlRoot) -> int:
     lines.append(payload["rule"])
     _emit(args, payload, "\n".join(lines))
     return 0
+
+
+def _sync(args: argparse.Namespace, root: ControlRoot) -> int:
+    results = sync_dispatches(root, dry_run=args.dry_run)
+    if not args.dry_run and results:
+        write_notes(root)
+    if not results:
+        _emit(args, [], "No dispatches with a PR to sync.")
+        return 0
+    rows = [
+        (item.dispatch_id, item.lifecycle, item.checks, item.action, " ".join(item.detail.split()))
+        for item in results
+    ]
+    text = "\n".join("  ".join(cell or "-" for cell in row) for row in rows)
+    _emit(args, [item.as_dict() for item in results], text)
+    return 0
+
+
+def _lesson(args: argparse.Namespace, root: ControlRoot) -> int:
+    if args.lesson_command == "add":
+        line = add_lesson(root, args.text, workspace=args.workspace)
+        payload = {"path": str(lessons_file(root)), "line": line}
+        _emit(args, payload, line)
+        return 0
+    raise ProjectHerdrError(f"unknown lesson command {args.lesson_command}")
 
 
 def _receipt_command(args: argparse.Namespace, root: ControlRoot) -> int:
