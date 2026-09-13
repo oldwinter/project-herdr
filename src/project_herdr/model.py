@@ -95,6 +95,7 @@ class Dispatch:
     prompt_path: str = ""
     herdr_requested: bool = False
     herdr_result: str = ""
+    pr_url: str = ""
 
     def as_dict(self) -> dict[str, object]:
         return {
@@ -110,6 +111,7 @@ class Dispatch:
             "prompt_path": self.prompt_path,
             "herdr_requested": self.herdr_requested,
             "herdr_result": self.herdr_result,
+            "pr_url": self.pr_url,
         }
 
 

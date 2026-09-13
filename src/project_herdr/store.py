@@ -41,6 +41,33 @@ class ControlRoot:
     def runtime_dir(self) -> Path:
         return self.control / "runtime"
 
+    @property
+    def notes_file(self) -> Path:
+        return self.control / "notes.md"
+
+    @property
+    def archived_file(self) -> Path:
+        return self.control / "archived.md"
+
+    @property
+    def context_dir(self) -> Path:
+        return self.root / "context"
+
+    @property
+    def context_docs_dir(self) -> Path:
+        return self.context_dir / "docs"
+
+    @property
+    def context_internal_dir(self) -> Path:
+        return self.context_dir / "internal"
+
+    @property
+    def context_media_dir(self) -> Path:
+        return self.context_dir / "media"
+
+    def worker_output_dir(self, dispatch_id: str) -> Path:
+        return self.context_internal_dir / dispatch_id
+
     def overlay_file(self, device: str) -> Path:
         return self.overlays_dir / device / "paths.toml"
 
@@ -57,3 +84,5 @@ class ControlRoot:
         self.dispatches_dir.mkdir(parents=True, exist_ok=True)
         self.receipts_dir.mkdir(parents=True, exist_ok=True)
         self.runtime_dir.mkdir(parents=True, exist_ok=True)
+        for folder in (self.context_docs_dir, self.context_internal_dir, self.context_media_dir):
+            folder.mkdir(parents=True, exist_ok=True)

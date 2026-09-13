@@ -29,6 +29,26 @@ ready -> needs_review | blocked | done
 
 收据不复制产品 diff。证据字段只放路径或命令名。
 
+## Notes
+
+`control/notes.md` 对应 Cursor Project 里 coordinator 维护的 `notes.md`：一行一个 checkbox，只有当前状态，没有历史。它是派生物，`dispatch create` / `dispatch attach` / `receipt record` / `notes` 都会用临时文件原子重写它。
+
+- 未完成的 dispatch 是 `- [ ]`；多个工作区时按 `## <workspace>` 分组。
+- `done` 的 dispatch 是 `- [x]`，只保留最新 3 条；更旧的追加进 `control/archived.md`（append-only，按 id 去重）。
+- 有收据时显示收据 summary，否则显示状态短语；`pr_url` 存在时追加 `[PR](url)`。
+
+## Shared context
+
+`context/` 对应 Cursor Project 的 Agent Store。分三层，worker prompt 会直接写明目标路径：
+
+| 目录 | 放什么 |
+| --- | --- |
+| `context/docs/` | 人会打开的交付物；跨仓教训在 `lessons.md` |
+| `context/internal/<dispatch>/` | worker 的 `report.md` 和其它 agent 侧证据 |
+| `context/media/` | 截图、录屏 |
+
+产品仓自己的知识仍然留在产品仓的 AGENTS.md。
+
 ## Path resolution
 
 1. `PROJECT_HERDR_PATH_<ID>`
