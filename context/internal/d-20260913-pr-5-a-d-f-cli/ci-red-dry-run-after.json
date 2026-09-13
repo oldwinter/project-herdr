@@ -1,0 +1,20 @@
+{
+  "control/dispatches/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "control/dispatches/d-20260913-archive-fixture-0.toml": "928de843cc262292f904fe63af537be9b06da68a9834e466313da8e7dd4c7b1a",
+  "control/dispatches/d-20260913-archive-fixture-1.toml": "ea685c0b53a67f568f87a23aa4cc25803f18488b5952bfc36de5e15de75ec340",
+  "control/dispatches/d-20260913-archive-fixture-2.toml": "47f6e03ae15a04e1201c196f75cf08951dac4d15d2dc6db48e67c8566a9240a1",
+  "control/dispatches/d-20260913-archive-fixture-3.toml": "d0d3d1ecfc4f2de8d07064e3cdd2f98311206c4cdecf59d7469a78edf5439d7a",
+  "control/dispatches/d-20260913-readme.toml": "cfa6bcbb56e1fa640634c47a3da80aa30f8a73ebe2f1ce4e1d403b0afaea016e",
+  "control/dispatches/d-20260913-real-merged-pr-sync-qa.toml": "b8cd4a065c4967d7d4754f20af4c63cc5809a40cf2ecbf4968c7f12bcda2c88f",
+  "control/dispatches/d-20260913-real-open-pr-sync-qa.toml": "8b50cf20666cdf6f7d04d74addcea07e8a5c93a5031b517749d6ae90bf3412ba",
+  "control/receipts/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "control/receipts/d-20260913-archive-fixture-0-20260913T162535Z.json": "a6dbc468faf157487fae32457811bb67e7e14383a25f3984acdc7d61d3e8f2dc",
+  "control/receipts/d-20260913-archive-fixture-1-20260913T162535Z.json": "b3c713b0bcc88af4b3041f9acb7dc8308b8b8bd7a875f657f0bdff74e681300a",
+  "control/receipts/d-20260913-archive-fixture-2-20260913T162536Z.json": "3f9e42f7990d5e654a0572aab1ab3fc87951e5d58775e7daefa8ed95fa806df2",
+  "control/receipts/d-20260913-archive-fixture-3-20260913T162536Z.json": "a16810288ed16a890421b1b268a5bf5d607b25be12fdee938f8bb845b14dc4ff",
+  "control/receipts/d-20260913-readme-20260913T162535343296Z.json": "8b3d9c12fe4e4224aebb54cf25c23840f56907cd6513da1782bfb3b6a3d36311",
+  "control/receipts/d-20260913-readme-20260913T162535Z.json": "fc3b1c5fc1404f00824bee4fd8db695a8820202a518066b7c3469bf37c0a61bb",
+  "control/receipts/d-20260913-real-merged-pr-sync-qa-20260913T162538Z.json": "f53b9efb7d2900d6a9cff0d330eead1de5ca8f8b7463b9f6522e579842660e9a",
+  "control/notes.md": "aea095fcf1ca1329822c16dfd6d198000319f9b279b774b172119e27f3bb456b",
+  "control/archived.md": "28983d3774325ea406a0c8e684cf06a2dd02d29846c1797f292b7bb74de06c87"
+}

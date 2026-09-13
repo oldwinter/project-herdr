@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "herdr",
+    "agent",
+    "get",
+    "d20260913justcheckreportmdagentp"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"id\":\"cli:agent:get\",\"result\":{\"agent\":{\"agent\":\"codex\",\"agent_status\":\"idle\",\"cwd\":\"/tmp/project-herdr-selftest-dfrb_g65/coordinator\",\"focused\":true,\"foreground_cwd\":\"/tmp/project-herdr-selftest-dfrb_g65/coordinator\",\"interactive_ready\":true,\"name\":\"d20260913justcheckreportmdagentp\",\"pane_id\":\"wE:p2\",\"revision\":4,\"state_change_seq\":96,\"tab_id\":\"wE:t1\",\"terminal_id\":\"term_65b5fbba002e019\",\"terminal_title\":\"coordinator\",\"terminal_title_stripped\":\"coordinator\",\"tokens\":{\"hml_idle\":\"○\"},\"workspace_id\":\"wE\"},\"type\":\"agent_info\"}}\n",
+  "stderr": ""
+}

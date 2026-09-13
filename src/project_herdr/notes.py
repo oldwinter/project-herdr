@@ -110,7 +110,13 @@ def _readout(item: Dispatch, receipt: Receipt | None) -> str:
 
 def _finished_at(root: ControlRoot, item: Dispatch) -> str:
     receipt = latest_receipt(root, item.id)
-    return receipt.recorded_at if receipt is not None else item.created_at
+    if receipt is None:
+        return item.created_at
+    paths = [
+        path for path in root.receipts_dir.glob(f"{item.id}-*.json")
+        if path.is_file()
+    ]
+    return f"{receipt.recorded_at}:{max((path.stat().st_mtime_ns for path in paths), default=0):020d}"
 
 
 def _append_archived(root: ControlRoot, rows: tuple[str, ...]) -> None:

@@ -1,0 +1,24 @@
+[
+  {
+    "argv": [
+      "herdr",
+      "pane",
+      "list",
+      "--workspace",
+      "wE"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"id\":\"cli:pane:list\",\"result\":{\"panes\":[{\"agent\":\"codex\",\"agent_session\":{\"agent\":\"codex\",\"kind\":\"id\",\"source\":\"herdr:codex\",\"value\":\"01a09b91-f896-7941-ac14-38220bd13f00\"},\"agent_status\":\"working\",\"cwd\":\"/home/cdd/project-herdr\",\"focused\":false,\"foreground_cwd\":\"/home/cdd/project-herdr\",\"pane_id\":\"wE:p1\",\"revision\":67,\"scroll\":{\"max_offset_from_bottom\":380,\"offset_from_bottom\":0,\"viewport_rows\":54},\"tab_id\":\"wE:t1\",\"terminal_id\":\"term_65b394b5fb86611\",\"terminal_title\":\"⠦ 运行 project-herdr 自测闭环 | project-herdr\",\"terminal_title_stripped\":\"运行 project-herdr 自测闭环 | project-herdr\",\"tokens\":{\"hml_working\":\"●\"},\"workspace_id\":\"wE\"},{\"agent\":\"codex\",\"agent_status\":\"idle\",\"cwd\":\"/tmp/project-herdr-selftest-dfrb_g65/coordinator\",\"focused\":true,\"foreground_cwd\":\"/tmp/project-herdr-selftest-dfrb_g65/coordinator\",\"pane_id\":\"wE:p2\",\"revision\":4,\"scroll\":{\"max_offset_from_bottom\":6,\"offset_from_bottom\":0,\"viewport_rows\":54},\"tab_id\":\"wE:t1\",\"terminal_id\":\"term_65b5fbba002e019\",\"terminal_title\":\"coordinator\",\"terminal_title_stripped\":\"coordinator\",\"tokens\":{\"hml_idle\":\"○\"},\"workspace_id\":\"wE\"}],\"type\":\"pane_list\"}}\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "herdr",
+      "agent",
+      "list"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"id\":\"cli:agent:list\",\"result\":{\"agents\":[{\"agent\":\"codex\",\"agent_session\":{\"agent\":\"codex\",\"kind\":\"id\",\"source\":\"herdr:codex\",\"value\":\"01a09b91-f896-7941-ac14-38220bd13f00\"},\"agent_status\":\"working\",\"cwd\":\"/home/cdd/project-herdr\",\"focused\":false,\"foreground_cwd\":\"/home/cdd/project-herdr\",\"pane_id\":\"wE:p1\",\"revision\":67,\"state_change_seq\":95,\"tab_id\":\"wE:t1\",\"terminal_id\":\"term_65b394b5fb86611\",\"terminal_title\":\"⠦ 运行 project-herdr 自测闭环 | project-herdr\",\"terminal_title_stripped\":\"运行 project-herdr 自测闭环 | project-herdr\",\"tokens\":{\"hml_working\":\"●\"},\"workspace_id\":\"wE\"},{\"agent\":\"codex\",\"agent_status\":\"idle\",\"cwd\":\"/tmp/project-herdr-selftest-dfrb_g65/coordinator\",\"focused\":true,\"foreground_cwd\":\"/tmp/project-herdr-selftest-dfrb_g65/coordinator\",\"interactive_ready\":true,\"name\":\"d20260913justcheckreportmdagentp\",\"pane_id\":\"wE:p2\",\"revision\":4,\"state_change_seq\":96,\"tab_id\":\"wE:t1\",\"terminal_id\":\"term_65b5fbba002e019\",\"terminal_title\":\"coordinator\",\"terminal_title_stripped\":\"coordinator\",\"tokens\":{\"hml_idle\":\"○\"},\"workspace_id\":\"wE\"}],\"type\":\"agent_list\"}}\n",
+    "stderr": ""
+  }
+]

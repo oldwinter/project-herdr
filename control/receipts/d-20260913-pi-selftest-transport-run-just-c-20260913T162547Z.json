@@ -1,0 +1,10 @@
+{
+  "dispatch_id": "d-20260913-pi-selftest-transport-run-just-c",
+  "workspace": "selftest",
+  "recorded_at": "20260913T162547Z",
+  "verdict": "blocked",
+  "summary": "Herdr prompt \u5df2\u9001\u8fbe\uff0c\u4f46 pi API \u8fd4\u56de 401\uff0c\u672a\u6267\u884c\u6d4b\u8bd5",
+  "evidence": [
+    "context/internal/selftest-herdr/pi-initial-result.json"
+  ]
+}

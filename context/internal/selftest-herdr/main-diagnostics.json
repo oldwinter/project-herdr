@@ -1,0 +1,70 @@
+[
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "exit_code": 0,
+    "stdout": "bc83d9b097019f5a069f911fdbec5293f8a46153\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "gh",
+      "pr",
+      "view",
+      "5",
+      "--repo",
+      "oldwinter/project-herdr",
+      "--json",
+      "state,headRefOid,baseRefName,url,mergedAt"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"baseRefName\":\"main\",\"headRefOid\":\"92c27cf966bd13f4170f617532f660d945d2e999\",\"mergedAt\":null,\"state\":\"OPEN\",\"url\":\"https://github.com/oldwinter/project-herdr/pull/5\"}\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "just",
+      "--json",
+      "doctor"
+    ],
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "error: `--dump` used with unexpected argument: `doctor`\n"
+  },
+  {
+    "argv": [
+      "just",
+      "doctor",
+      "--json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"device\": \"185-server\",\n  \"git\": true,\n  \"harnesses\": [\n    \"claude\",\n    \"codex\",\n    \"droid\",\n    \"grok\",\n    \"hermes\",\n    \"pi\"\n  ],\n  \"herdr\": \"/home/cdd/.local/bin/herdr\",\n  \"herdr_pane\": true,\n  \"ok\": true,\n  \"root\": \"/home/cdd/project-herdr\",\n  \"workspaces\": 2\n}\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "just",
+      "sync",
+      "--dry-run"
+    ],
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "error: justfile does not contain recipe `sync`\n"
+  },
+  {
+    "argv": [
+      "just",
+      "lesson",
+      "add",
+      "selftest probe",
+      "--workspace",
+      "selftest"
+    ],
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "error: justfile does not contain recipe `lesson`\n"
+  }
+]

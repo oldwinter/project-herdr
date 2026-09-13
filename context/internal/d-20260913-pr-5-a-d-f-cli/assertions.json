@@ -1,0 +1,512 @@
+[
+  {
+    "name": "command 1 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 3 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 5 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "A 37 tests pass",
+    "passed": true,
+    "detail": "c.SyncTest.test_missing_gh_fails_closed_only_when_needed) ... ok\ntest_probe_classifies_checks (test_sync.SyncTest.test_probe_classifies_checks) ... ok\n\n----------------------------------------------------------------------\nRan 37 tests in 0.154s\n\nOK\n"
+  },
+  {
+    "name": "command 8 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "A start final line notes",
+    "passed": true,
+    "detail": "Coordinator sessions stay in this repo. Workers edit registered workspaces only.\nproject-herdr doctor\nproject-herdr workspaces\nproject-herdr status\nproject-herdr inbox\nproject-herdr notes\n"
+  },
+  {
+    "name": "command 11 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "A six harnesses",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "command 14 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 16 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 18 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 20 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 22 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "A context folders exist",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Guide JSON invocation rejects --json before recipe",
+    "passed": true,
+    "detail": "error: `--dump` used with unexpected argument: `doctor`\n"
+  },
+  {
+    "name": "command 27 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "Correct JSON invocation",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "command 30 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 32 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 36 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 38 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 41 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 43 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "B env path and clean git",
+    "passed": false,
+    "detail": "{'branch': 'main', 'dirty': False, 'git_state': 'ok', 'head': '39302c5', 'id': 'skills', 'kind': 'product', 'live_dispatches': [], 'name': 'Skills', 'observed_remote': 'git@github.com:oldwinter/skills.git', 'path': '/tmp/project-herdr-selftest-dfrb_g65/product-fixture', 'path_state': 'resolved', 'remote': 'git@github.com:oldwinter/skills.git'}"
+  },
+  {
+    "name": "command 47 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "B hostname overlay path and git",
+    "passed": false,
+    "detail": "{'branch': 'main', 'dirty': False, 'git_state': 'ok', 'head': '39302c5', 'id': 'skills', 'kind': 'product', 'live_dispatches': [], 'name': 'Skills', 'observed_remote': 'git@github.com:oldwinter/skills.git', 'path': '/tmp/project-herdr-selftest-dfrb_g65/product-fixture', 'path_state': 'resolved', 'remote': 'git@github.com:oldwinter/skills.git'}"
+  },
+  {
+    "name": "command 50 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "C create immediately updates notes",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "C prompt Output evidence and attach instructions",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "command 56 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 58 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 60 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 62 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 64 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "B/C dirty reflects worker diff",
+    "passed": true,
+    "detail": "{'branch': 'main', 'dirty': True, 'git_state': 'ok', 'head': '39302c5', 'id': 'skills', 'kind': 'product', 'live_dispatches': ['d-20260913-readme'], 'name': 'Skills', 'observed_remote': 'git@github.com:oldwinter/skills.git', 'path': '/tmp/project-herdr-selftest-dfrb_g65/product-fixture', 'path_state': 'resolved', 'remote': 'git@github.com:oldwinter/skills.git'}"
+  },
+  {
+    "name": "command 68 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "C receipt immediately updates notes",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "command 72 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "C review inbox",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "command 75 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 77 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "C passed checkbox",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "command 81 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "C inbox empty after passed",
+    "passed": true,
+    "detail": "Inbox empty.\n"
+  },
+  {
+    "name": "command 84 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 86 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 88 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 90 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 92 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 94 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 96 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 98 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 100 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "C latest three completed notes only",
+    "passed": true,
+    "detail": "3"
+  },
+  {
+    "name": "C remaining completed archived",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "command 106 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 108 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 110 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "D attach immediately links d-20260913-real-merged-pr-sync-qa",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "command 114 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "D attach immediately links d-20260913-real-open-pr-sync-qa",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "command 118 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 121 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "D real dry-run writes no files",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "D actual PR4 merged -> done dry-run",
+    "passed": true,
+    "detail": "[\n  {\n    \"action\": \"done\",\n    \"checks\": \"passing\",\n    \"detail\": \"PR merged\",\n    \"dispatch_id\": \"d-20260913-real-merged-pr-sync-qa\",\n    \"lifecycle\": \"merged\",\n    \"pr_url\": \"https://github.com/oldwinter/project-herdr/pull/4\"\n  },\n  {\n    \"action\": \"unchanged\",\n    \"checks\": \"passing\",\n    \"detail\": \"\",\n    \"dispatch_id\": \"d-20260913-real-open-pr-sync-qa\",\n    \"lifecycle\": \"open\",\n    \"pr_url\": \"https://github.com/oldwinter/project-herdr/pull/5\"\n  }\n]\n"
+  },
+  {
+    "name": "D actual PR5 open",
+    "passed": true,
+    "detail": "[\n  {\n    \"action\": \"done\",\n    \"checks\": \"passing\",\n    \"detail\": \"PR merged\",\n    \"dispatch_id\": \"d-20260913-real-merged-pr-sync-qa\",\n    \"lifecycle\": \"merged\",\n    \"pr_url\": \"https://github.com/oldwinter/project-herdr/pull/4\"\n  },\n  {\n    \"action\": \"unchanged\",\n    \"checks\": \"passing\",\n    \"detail\": \"\",\n    \"dispatch_id\": \"d-20260913-real-open-pr-sync-qa\",\n    \"lifecycle\": \"open\",\n    \"pr_url\": \"https://github.com/oldwinter/project-herdr/pull/5\"\n  }\n]\n"
+  },
+  {
+    "name": "command 127 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "D sync updates notes immediately",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "command 131 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "D actual merged contract done",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "command 136 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "D simulated unauth probe_failed login hint",
+    "passed": true,
+    "detail": "[\n  {\n    \"action\": \"probe_failed\",\n    \"checks\": \"unknown\",\n    \"detail\": \"To get started with GitHub CLI, please run: gh auth login\",\n    \"dispatch_id\": \"d-20260913-real-open-pr-sync-qa\",\n    \"lifecycle\": \"unknown\",\n    \"pr_url\": \"https://github.com/oldwinter/project-herdr/pull/5\"\n  }\n]\n"
+  },
+  {
+    "name": "D simulated unauth contracts receipts unchanged",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "D gh missing fails closed",
+    "passed": true,
+    "detail": "gh is not on PATH; nothing synced (install GitHub CLI or record receipts by hand)\nerror: recipe `sync` failed on line 39 with exit code 3\n"
+  },
+  {
+    "name": "command 146 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "D simulated CI red dry-run immutable",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "D simulated CI red dry-run needs_review",
+    "passed": true,
+    "detail": "[\n  {\n    \"action\": \"needs_review\",\n    \"checks\": \"failing\",\n    \"detail\": \"CI failing on PR\",\n    \"dispatch_id\": \"d-20260913-real-open-pr-sync-qa\",\n    \"lifecycle\": \"open\",\n    \"pr_url\": \"https://github.com/oldwinter/project-herdr/pull/5\"\n  }\n]\n"
+  },
+  {
+    "name": "command 151 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "D simulated CI-red sync immediately notes",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "command 155 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "D simulated CI-red contract needs_review",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "command 158 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "D simulated CI-red inbox review",
+    "passed": true,
+    "detail": "[\n  {\n    \"dispatch_id\": \"d-20260913-real-open-pr-sync-qa\",\n    \"kind\": \"review\",\n    \"latest_verdict\": \"needs_review\",\n    \"status\": \"needs_review\",\n    \"summary\": \"CI failing on PR\",\n    \"waiting_since\": \"20260913T162539Z\",\n    \"workspace\": \"skills\"\n  }\n]\n"
+  },
+  {
+    "name": "E negative enqueue not_in_herdr_pane",
+    "passed": true,
+    "detail": "not_in_herdr_pane: Run enqueue from a Herdr-managed pane, or leave the dispatch ready.\nerror: recipe `dispatch` failed on line 47 with exit code 3\n"
+  },
+  {
+    "name": "E negative enqueue retains ready contract",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "command 165 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 168 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "harness pi retained in contract",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "command 171 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 174 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "harness codex retained in contract",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "command 177 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "command 180 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "harness claude retained in contract",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Harness prompts identical after ID normalization",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "command 184 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "F lesson persisted",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "command 188 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "Coordinator only changes control and context",
+    "passed": true,
+    "detail": "['control/notes.md', 'context/docs/lessons.md', 'context/internal/d-20260913-just-check-report-md-agent-push/report.md', 'context/internal/d-20260913-readme/report.md', 'control/archived.md', 'control/dispatches/d-20260913-archive-fixture-0.toml', 'control/dispatches/d-20260913-archive-fixture-1.toml', 'control/dispatches/d-20260913-archive-fixture-2.toml', 'control/dispatches/d-20260913-archive-fixture-3.toml', 'control/dispatches/d-20260913-compare-interchangeable-harness-2.toml', 'control/dispatches/d-20260913-compare-interchangeable-harness-3.toml', 'control/dispatches/d-20260913-compare-interchangeable-harness.toml', 'control/dispatches/d-20260913-negative-enqueue-outside-herdr.toml', 'control/dispatches/d-20260913-readme.toml', 'control/dispatches/d-20260913-real-merged-pr-sync-qa.toml', 'control/dispatches/d-20260913-real-open-pr-sync-qa.toml', 'control/receipts/d-20260913-archive-fixture-0-20260913T162535Z.json', 'control/receipts/d-20260913-archive-fixture-1-20260913T162535Z.json', 'control/receipts/d-20260913-archive-fixture-2-20260913T162536Z.json', 'control/receipts/d-20260913-archive-fixture-3-20260913T162536Z.json', 'control/receipts/d-20260913-readme-20260913T162535343296Z.json', 'control/receipts/d-20260913-readme-20260913T162535Z.json', 'control/receipts/d-20260913-real-merged-pr-sync-qa-20260913T162538Z.json', 'control/receipts/d-20260913-real-open-pr-sync-qa-20260913T162539Z.json']"
+  },
+  {
+    "name": "command 192 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  },
+  {
+    "name": "Worker diff only product README",
+    "passed": true,
+    "detail": "README.md\n"
+  },
+  {
+    "name": "command 195 exits 0",
+    "passed": true,
+    "detail": "actual 0"
+  }
+]

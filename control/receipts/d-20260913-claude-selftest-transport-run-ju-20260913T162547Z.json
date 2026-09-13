@@ -1,0 +1,10 @@
+{
+  "dispatch_id": "d-20260913-claude-selftest-transport-run-ju",
+  "workspace": "selftest",
+  "recorded_at": "20260913T162547Z",
+  "verdict": "blocked",
+  "summary": "enqueue \u663e\u793a dispatched\uff0c\u4f46 Claude \u505c\u5728\u9996\u6b21\u542f\u52a8\u754c\u9762\uff0c\u4efb\u52a1\u672a\u6267\u884c",
+  "evidence": [
+    "context/internal/selftest-herdr/claude-initial-result.json"
+  ]
+}

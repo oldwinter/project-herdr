@@ -1,0 +1,11 @@
+{
+  "dispatch_id": "d-20260913-pr-5-a-d-f-cli",
+  "workspace": "selftest",
+  "recorded_at": "20260913T162825Z",
+  "verdict": "needs_review",
+  "summary": "37 tests \u901a\u8fc7\uff1b\u5b9e\u6d4b\u53d1\u73b0\u540c\u79d2\u6536\u636e/\u5f52\u6863\u6392\u5e8f\u9519\u8bef\u53ca\u6307\u5357 JSON \u547d\u4ee4\u9519\u8bef\uff0c\u89c1\u81ea\u6d4b\u62a5\u544a",
+  "evidence": [
+    "context/internal/d-20260913-pr-5-a-d-f-cli/report.md",
+    "context/docs/selftest-2026-09-13.md"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "just",
+    "dispatch",
+    "create",
+    "--device",
+    "selftest",
+    "--workspace",
+    "selftest",
+    "--objective",
+    "pi selftest transport: run just check, report results in the specified output directory, then stop. Do not edit source or tests. Do not launch agents, push or merge. Control-plane root is /home/cdd/project-herdr.",
+    "--harness",
+    "pi",
+    "--accept",
+    "just check",
+    "--enqueue",
+    "--json"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 4.322,
+  "stdout": "{\n  \"acceptance_commands\": [\n    \"just check\"\n  ],\n  \"authorization\": {\n    \"delete\": false,\n    \"merge\": false,\n    \"push\": false,\n    \"send\": false\n  },\n  \"created_at\": \"20260913T162440Z\",\n  \"harness\": \"pi\",\n  \"herdr_requested\": true,\n  \"herdr_result\": \"dispatched\",\n  \"id\": \"d-20260913-pi-selftest-transport-run-just-c\",\n  \"objective\": \"pi selftest transport: run just check, report results in the specified output directory, then stop. Do not edit source or tests. Do not launch agents, push or merge. Control-plane root is /home/cdd/project-herdr.\",\n  \"pr_url\": \"\",\n  \"prompt_path\": \"control/runtime/d-20260913-pi-selftest-transport-run-just-c/prompt.md\",\n  \"status\": \"dispatched\",\n  \"workspace\": \"selftest\",\n  \"writeback_receipt_dir\": \"control/receipts\"\n}\n",
+  "stderr": ""
+}

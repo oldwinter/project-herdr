@@ -1,0 +1,10 @@
+{
+  "dispatch_id": "d-20260913-readme",
+  "workspace": "skills",
+  "recorded_at": "20260913T162535Z",
+  "verdict": "needs_review",
+  "summary": "README \u52a0\u4e86\u7b80\u4ecb\uff0c\u7b49\u4f60\u770b\u4e00\u773c",
+  "evidence": [
+    "context/internal/d-20260913-readme/report.md"
+  ]
+}

@@ -94,6 +94,25 @@ class HerdrAdapter:
                 reason="herdr_prompt_failed",
                 detail=(prompt_err or prompt_out).strip() or f"exit {prompt_code}",
             )
+        if self.runner is None:
+            check_code, check_out, check_err = self._run([herdr, "agent", "get", agent])
+            if check_code != 0:
+                return EnqueueResult(
+                    ok=False,
+                    reason="herdr_status_failed",
+                    detail=(check_err or check_out).strip() or f"exit {check_code}",
+                )
+            try:
+                payload = json.loads(check_out)
+                status = payload["result"]["agent"]["agent_status"]
+            except (json.JSONDecodeError, KeyError, TypeError):
+                return EnqueueResult(ok=False, reason="herdr_status_invalid", detail=check_out.strip())
+            if status == "idle":
+                return EnqueueResult(
+                    ok=False,
+                    reason="herdr_prompt_stalled",
+                    detail="Herdr accepted the prompt but the agent remained idle.",
+                )
         return EnqueueResult(
             ok=True,
             reason="dispatched",

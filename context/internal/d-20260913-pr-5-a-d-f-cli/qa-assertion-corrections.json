@@ -1,0 +1,12 @@
+[
+  {
+    "name": "B env path and clean git",
+    "passed": true,
+    "detail": "QA assertion corrected: CLI JSON property is git_state, not git. Original command output records git_state=ok and the expected fixture path; original failed assertion remains in commands.jsonl."
+  },
+  {
+    "name": "B hostname overlay path and git",
+    "passed": true,
+    "detail": "QA assertion corrected: CLI JSON property is git_state, not git. Original command output records git_state=ok and the expected fixture path; original failed assertion remains in commands.jsonl."
+  }
+]
