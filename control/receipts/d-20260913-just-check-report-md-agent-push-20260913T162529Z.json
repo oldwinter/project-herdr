@@ -1,0 +1,10 @@
+{
+  "dispatch_id": "d-20260913-just-check-report-md-agent-push",
+  "workspace": "selftest",
+  "recorded_at": "20260913T162529Z",
+  "verdict": "needs_review",
+  "summary": "37 tests passed after manual prompt retry; initial delivery and report destination failed",
+  "evidence": [
+    "context/internal/d-20260913-just-check-report-md-agent-push/report.md"
+  ]
+}

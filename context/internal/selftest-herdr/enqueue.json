@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "just",
+    "dispatch",
+    "create",
+    "--device",
+    "selftest",
+    "--workspace",
+    "selftest",
+    "--objective",
+    "仅在当前工作区运行 just check 并把真实结果写入合同指定 report.md。禁止改动源码、测试或文档；不要创建其他 agent，不 push、不 merge。",
+    "--harness",
+    "codex",
+    "--accept",
+    "just check",
+    "--enqueue",
+    "--json"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 4.39,
+  "stdout": "{\n  \"acceptance_commands\": [\n    \"just check\"\n  ],\n  \"authorization\": {\n    \"delete\": false,\n    \"merge\": false,\n    \"push\": false,\n    \"send\": false\n  },\n  \"created_at\": \"20260913T162308Z\",\n  \"harness\": \"codex\",\n  \"herdr_requested\": true,\n  \"herdr_result\": \"dispatched\",\n  \"id\": \"d-20260913-just-check-report-md-agent-push\",\n  \"objective\": \"\\u4ec5\\u5728\\u5f53\\u524d\\u5de5\\u4f5c\\u533a\\u8fd0\\u884c just check \\u5e76\\u628a\\u771f\\u5b9e\\u7ed3\\u679c\\u5199\\u5165\\u5408\\u540c\\u6307\\u5b9a report.md\\u3002\\u7981\\u6b62\\u6539\\u52a8\\u6e90\\u7801\\u3001\\u6d4b\\u8bd5\\u6216\\u6587\\u6863\\uff1b\\u4e0d\\u8981\\u521b\\u5efa\\u5176\\u4ed6 agent\\uff0c\\u4e0d push\\u3001\\u4e0d merge\\u3002\",\n  \"pr_url\": \"\",\n  \"prompt_path\": \"control/runtime/d-20260913-just-check-report-md-agent-push/prompt.md\",\n  \"status\": \"dispatched\",\n  \"workspace\": \"selftest\",\n  \"writeback_receipt_dir\": \"control/receipts\"\n}\n",
+  "stderr": ""
+}

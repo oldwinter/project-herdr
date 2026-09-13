@@ -29,8 +29,8 @@ Work only in this workspace:
 - path: {path}
 - remote: {remote}
 
-Do not edit the control-plane repository except by recording a receipt with
-`project-herdr receipt record` from the control-plane root, and by writing
+Do not edit the control-plane repository except by recording a receipt from
+the control-plane root `{control_root}`, and by writing
 under the output directory below.
 
 ## Objective
@@ -63,17 +63,19 @@ Refuse any unauthorized external action.
 
 ## Writeback
 
-When finished, from the control-plane root:
+When finished, run this from the control-plane root `{control_root}`:
 
 ```
-project-herdr receipt record --dispatch {id} --verdict passed|failed|needs_review|blocked --summary "..." --evidence {output_dir}/report.md
+PYTHONPATH=src python3 -m project_herdr --root . receipt record --dispatch {id} --verdict passed|failed|needs_review|blocked --summary "..." --evidence {output_dir}/report.md
 ```
 
 If you opened a pull request (only with push authorization), attach it:
 
 ```
-project-herdr dispatch attach {id} --pr <url>
+PYTHONPATH=src python3 -m project_herdr --root . dispatch attach {id} --pr <url>
 ```
+
+The equivalent installed command is `project-herdr dispatch attach {id} --pr <url>`.
 
 Then stop. Do not push, merge, publish, or send unless authorization above is true.
 """
@@ -246,6 +248,7 @@ def write_worker_prompt(
         docs_dir=_relpath(root.root, root.context_docs_dir),
         media_dir=_relpath(root.root, root.context_media_dir),
         output_dir=_relpath(root.root, root.worker_output_dir(item.id)),
+        control_root=str(root.root),
     )
     path.write_text(body, encoding="utf-8")
     return path

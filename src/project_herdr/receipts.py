@@ -13,7 +13,11 @@ def list_receipts(root: ControlRoot, dispatch_id: str | None = None) -> tuple[Re
     if not root.receipts_dir.is_dir():
         return ()
     items: list[Receipt] = []
-    for path in sorted(root.receipts_dir.glob("*.json")):
+    paths = sorted(
+        root.receipts_dir.glob("*.json"),
+        key=lambda path: (path.stat().st_mtime_ns, path.name),
+    )
+    for path in paths:
         item = load_receipt(path)
         if dispatch_id is None or item.dispatch_id == dispatch_id:
             items.append(item)
@@ -76,8 +80,10 @@ def record_receipt(
         summary=text,
         evidence=evidence,
     )
-    path = root.receipt_file(dispatch_id, recorded_at)
-    if path.exists():
-        path = root.receipt_file(dispatch_id, stamp_dt.strftime("%Y%m%dT%H%M%S%fZ"))
+    path = root.receipt_file(dispatch_id, stamp_dt.strftime("%Y%m%dT%H%M%S%fZ"))
+    suffix = 0
+    while path.exists():
+        suffix += 1
+        path = root.receipts_dir / f"{dispatch_id}-{stamp_dt.strftime('%Y%m%dT%H%M%S%fZ')}-{suffix}.json"
     path.write_text(json.dumps(receipt.as_dict(), indent=2) + "\n", encoding="utf-8")
     return receipt

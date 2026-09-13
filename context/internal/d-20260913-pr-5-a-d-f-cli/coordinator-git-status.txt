@@ -1,0 +1,24 @@
+ M control/notes.md
+?? context/docs/lessons.md
+?? context/internal/d-20260913-just-check-report-md-agent-push/report.md
+?? context/internal/d-20260913-readme/report.md
+?? control/archived.md
+?? control/dispatches/d-20260913-archive-fixture-0.toml
+?? control/dispatches/d-20260913-archive-fixture-1.toml
+?? control/dispatches/d-20260913-archive-fixture-2.toml
+?? control/dispatches/d-20260913-archive-fixture-3.toml
+?? control/dispatches/d-20260913-compare-interchangeable-harness-2.toml
+?? control/dispatches/d-20260913-compare-interchangeable-harness-3.toml
+?? control/dispatches/d-20260913-compare-interchangeable-harness.toml
+?? control/dispatches/d-20260913-negative-enqueue-outside-herdr.toml
+?? control/dispatches/d-20260913-readme.toml
+?? control/dispatches/d-20260913-real-merged-pr-sync-qa.toml
+?? control/dispatches/d-20260913-real-open-pr-sync-qa.toml
+?? control/receipts/d-20260913-archive-fixture-0-20260913T162535Z.json
+?? control/receipts/d-20260913-archive-fixture-1-20260913T162535Z.json
+?? control/receipts/d-20260913-archive-fixture-2-20260913T162536Z.json
+?? control/receipts/d-20260913-archive-fixture-3-20260913T162536Z.json
+?? control/receipts/d-20260913-readme-20260913T162535343296Z.json
+?? control/receipts/d-20260913-readme-20260913T162535Z.json
+?? control/receipts/d-20260913-real-merged-pr-sync-qa-20260913T162538Z.json
+?? control/receipts/d-20260913-real-open-pr-sync-qa-20260913T162539Z.json

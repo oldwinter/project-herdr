@@ -1,0 +1,5 @@
+{
+  "exit_code": 0,
+  "stdout": "bash: warning: setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory\nbash: warning: setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory\ncdd@185-server:/tmp/project-herdr-selftest-dfrb_g65/coordinator$ codex\n\n╭──────────────────────────────────────────────────╮\n│ >_ OpenAI Codex (v0.154.0)                       │\n│                                                  │\n│ model:       gpt-6-astra high   /model to change │\n│ directory:   /tmp/…/coordinator                  │\n│ permissions: YOLO mode                           │\n╰──────────────────────────────────────────────────╯\n\n  Tip: New Build faster with Codex.\n\n⠁             ⠄          ⢀  ⠈                    ⠐      ⡀⠐  ⠄\n› Ask Codex to do anything              ⠁ ⠁                  ⠈\n      ⠠⢀            ⠠               ⠠        ⢀       ⡀⠄   ⡀\n  gpt-6-astra high · /tmp/project-herdr-selftest-dfrb_g65/coordinator",
+  "stderr": ""
+}

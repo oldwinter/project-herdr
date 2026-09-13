@@ -1,0 +1,22 @@
+id = "d-20260913-claude-selftest-transport-run-ju"
+workspace = "selftest"
+objective = "claude selftest transport: run just check, report results in the specified output directory, then stop. Do not edit source or tests. Do not launch agents, push or merge. Control-plane root is /home/cdd/project-herdr."
+created_at = "20260913T162444Z"
+status = "blocked"
+harness = "claude"
+prompt_path = "control/runtime/d-20260913-claude-selftest-transport-run-ju/prompt.md"
+herdr_requested = true
+herdr_result = "dispatched"
+pr_url = ""
+
+[authorization]
+push = false
+merge = false
+send = false
+delete = false
+
+[acceptance]
+commands = ["just check"]
+
+[writeback]
+receipt_dir = "control/receipts"

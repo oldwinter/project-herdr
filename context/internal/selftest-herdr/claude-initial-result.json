@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "herdr",
+    "agent",
+    "read",
+    "wE:p4",
+    "--source",
+    "recent-unwrapped",
+    "--lines",
+    "160"
+  ],
+  "exit_code": 0,
+  "stdout": "bash: warning: setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory\nbash: warning: setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory\ncdd@185-server:/tmp/project-herdr-selftest-dfrb_g65/coordinator$ claude\n\"gpt-5.6-luna\" is not a model this version of Claude Code recognizes, so auto-compact will keep this session within 200k tokens (the context window it assumes). If the model accepts more, append [1m] to the model name for 1M, or set CLAUDE_CODE_MAX_CONTEXT_TOKENS to its real window; to make it recognized, map it in the modelOverrides setting or update Claude Code; CLAUDE_CODE_DISABLE_UNKNOWN_MODEL_WINDOW_ENFORCEMENT=1 restores the previous wait-for-the-API behavior.\nWelcome to\n...............\n\n     *\n\n\n    ░░░\n   ░░░░░░░░░░░░\n\n *\n\n\n\n      ███\n       █▄██\n.......█ █   █\n█..............\n.Let's get ....\n.started.....\n\n Choose the\n text style\n that looks\nWelcome to\n...............\n\n     *\n\n\n    ░░░\n   ░░░░░░░░░░░░\n\n *\n\n\n\n      ███\n       █▄██\n.......█ █   █\n\n Security notes:\n\n 1. Claude can make\n    You're s.\n    responsible for\n    Claude's\n 2. Due to prompt\n    Learn more: s\n    https://code.cl\n Press Enter to s/e\n continue…rityde.",
+  "stderr": ""
+}
