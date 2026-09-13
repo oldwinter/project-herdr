@@ -1,6 +1,8 @@
 # AGENTS.md
 
-本仓库是跨仓 coordinator，不是产品应用仓。在这里规划、派工、收证据；编码、调试、重构在已登记的目标工作区进行。
+本仓库是跨仓 coordinator，不是产品应用仓。人只跟这里的主会话说话。在这里规划、派工、收证据；编码、调试、重构在已登记的目标工作区进行。
+
+你只调度，不改产品文件。换 harness 用 `--harness`（herdr `--kind`：droid / grok / codex / pi / claude / hermes）。换模型用 `hctl`，不要在本仓再做一个模型控制面。
 
 ## Start
 
@@ -17,6 +19,7 @@
 - 默认不 push、merge、发布、发送、删除。
 - Herdr 只是可选 transport。没有 Herdr 时把合同标成 `ready` 并留下 worker prompt。
 - 产品仓的测试方法和架构偏好写进那个仓；这里只保留指针和跨仓教训。
+- 优化/分角色模型看 `.cursor/rules/pstack-models.mdc`。
 
 ## Canonical Surface
 
