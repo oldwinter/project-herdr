@@ -18,7 +18,7 @@ from project_herdr.dispatch import (
 from project_herdr.errors import AdapterError, ProjectHerdrError
 from project_herdr.herdr import HerdrAdapter, default_adapter
 from project_herdr.inbox import build_inbox
-from project_herdr.model import Authorization, EnqueueRequest
+from project_herdr.model import KNOWN_HARNESSES, Authorization, EnqueueRequest
 from project_herdr.overlay import load_overlay, resolve_workspace_path
 from project_herdr.receipts import record_receipt
 from project_herdr.registry import load_registry, require_workspace
@@ -74,7 +74,11 @@ def build_parser() -> argparse.ArgumentParser:
     )
     create.add_argument("--workspace", required=True)
     create.add_argument("--objective", required=True)
-    create.add_argument("--harness")
+    create.add_argument(
+        "--harness",
+        choices=sorted(KNOWN_HARNESSES),
+        help="Worker herdr --kind. Defaults to the workspace default_harness.",
+    )
     create.add_argument("--accept", action="append", default=[], help="Acceptance command; repeatable.")
     create.add_argument("--allow-push", action="store_true")
     create.add_argument("--allow-merge", action="store_true")
@@ -151,6 +155,7 @@ def _start(args: argparse.Namespace, root: ControlRoot) -> int:
             "project-herdr inbox",
         ],
         "rule": "Coordinator sessions stay in this repo. Workers edit registered workspaces only.",
+        "harnesses": sorted(KNOWN_HARNESSES),
     }
     _emit(args, payload, "\n".join([payload["rule"], *payload["next"]]))
     return 0
@@ -169,7 +174,9 @@ def _doctor(args: argparse.Namespace, root: ControlRoot) -> int:
         "git": bool(shutil.which("git")),
         "herdr": herdr or "",
         "herdr_pane": in_herdr,
+        "harnesses": sorted(KNOWN_HARNESSES),
     }
+    kinds = " ".join(payload["harnesses"])
     lines = [
         f"root            {payload['root']}",
         f"device          {payload['device']}",
@@ -177,6 +184,7 @@ def _doctor(args: argparse.Namespace, root: ControlRoot) -> int:
         f"git             {'yes' if payload['git'] else 'no'}",
         f"herdr           {payload['herdr'] or 'missing (optional)'}",
         f"herdr_pane      {'yes' if in_herdr else 'no'}",
+        f"harnesses       {kinds}",
     ]
     _emit(args, payload, "\n".join(lines))
     return 0 if payload["git"] else 1

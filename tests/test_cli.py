@@ -105,6 +105,16 @@ class CliTest(unittest.TestCase):
             )
             self.assertEqual(payload[0]["path_state"], "missing")
 
+    def test_doctor_lists_harness_kinds(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = make_root(Path(tmp))
+            payload = json.loads(
+                self._run(["--root", str(root.root), "--json", "doctor"])
+            )
+            self.assertIn("codex", payload["harnesses"])
+            self.assertIn("pi", payload["harnesses"])
+            self.assertEqual(payload["harnesses"], sorted(payload["harnesses"]))
+
     def _run(self, argv: list[str]) -> str:
         buffer = io.StringIO()
         with redirect_stdout(buffer):
