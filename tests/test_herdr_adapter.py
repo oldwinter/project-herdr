@@ -58,11 +58,18 @@ class HerdrAdapterTest(unittest.TestCase):
         self.assertEqual(calls[0][1:3], ["pane", "split"])
         self.assertIn("/tmp/novel", calls[0])
         self.assertEqual(calls[1][1:3], ["agent", "start"])
+        self.assertEqual(calls[1][calls[1].index("--kind") + 1], "codex")
         self.assertEqual(calls[2][1:3], ["agent", "prompt"])
         self.assertNotIn("--wait", calls[2])
 
+    def test_rejects_unknown_harness_before_herdr(self) -> None:
+        adapter = HerdrAdapter(env={"HERDR_ENV": "1"}, which=lambda _: "/usr/bin/herdr")
+        result = adapter.enqueue(_request(harness="not-a-kind"))
+        self.assertFalse(result.ok)
+        self.assertEqual(result.reason, "unknown_harness")
 
-def _request() -> EnqueueRequest:
+
+def _request(harness: str = "codex") -> EnqueueRequest:
     from project_herdr.model import Dispatch, Workspace
 
     workspace = Workspace(
@@ -82,5 +89,5 @@ def _request() -> EnqueueRequest:
         workspace=workspace,
         workspace_path="/tmp/novel",
         prompt_path="/tmp/prompt.md",
-        harness="codex",
+        harness=harness,
     )

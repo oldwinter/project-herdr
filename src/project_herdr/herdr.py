@@ -7,7 +7,7 @@ from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
-from project_herdr.model import EnqueueRequest, EnqueueResult
+from project_herdr.model import KNOWN_HARNESSES, EnqueueRequest, EnqueueResult
 
 Runner = Callable[[Sequence[str], Mapping[str, str]], tuple[int, str, str]]
 
@@ -24,6 +24,13 @@ class HerdrAdapter:
                 ok=False,
                 reason="not_in_herdr_pane",
                 detail="Run enqueue from a Herdr-managed pane, or leave the dispatch ready.",
+            )
+        kind = request.harness
+        if kind not in KNOWN_HARNESSES:
+            return EnqueueResult(
+                ok=False,
+                reason="unknown_harness",
+                detail=f"harness {kind!r} is not a herdr --kind (use {', '.join(sorted(KNOWN_HARNESSES))}).",
             )
         herdr = self.which("herdr")
         if not herdr:
@@ -66,7 +73,7 @@ class HerdrAdapter:
                 "start",
                 agent,
                 "--kind",
-                request.harness,
+                kind,
                 "--pane",
                 pane_id,
             ]
