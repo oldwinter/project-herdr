@@ -7,7 +7,10 @@
 | Cursor Project | Project Herdr |
 | --- | --- |
 | Coordinator 不写代码 | 本仓只写合同、收据、inbox |
-| Shared context 随项目长 | 产品规则留在目标仓；跨仓教训才回到这里 |
+| `notes.md` 状态读数 | `control/notes.md`，从合同和收据重算，完成项超过 3 条归档到 `archived.md` |
+| Shared context（Agent Store） | `context/docs` `context/internal` `context/media`；产品规则仍留在目标仓 |
+| 一个 worker 一条工作流，kickoff 写明输出位置 | worker prompt 自带 `context/internal/<dispatch>/report.md` 目标路径 |
+| PR 回到 coordinator | `dispatch attach --pr`，notes 里带链接 |
 | Cloud + subscriptions | 本机 Herdr pane；定时/事件仍由既有 automation 拥有 |
 
 ```text
@@ -66,6 +69,15 @@ just receipt record \
   --summary "Ending still open"
 just inbox
 ```
+
+worker 开了 PR 就挂到合同上，然后看状态读数：
+
+```bash
+just dispatch attach d-20260913-draft-chapter-one --pr https://github.com/example/novel/pull/7
+just notes
+```
+
+`control/notes.md` 每次 create / attach / receipt 都会自动重写，`just notes` 只是手动刷新并打印。共享上下文的三个目录用 `just context` 查看。
 
 CLI 入口是 `project-herdr` / `ph`。在 checkout 里也可以：
 

@@ -19,6 +19,7 @@ from project_herdr.errors import AdapterError, ProjectHerdrError
 from project_herdr.herdr import HerdrAdapter, default_adapter
 from project_herdr.inbox import build_inbox
 from project_herdr.model import KNOWN_HARNESSES, Authorization, EnqueueRequest
+from project_herdr.notes import write_notes
 from project_herdr.overlay import load_overlay, resolve_workspace_path
 from project_herdr.receipts import record_receipt
 from project_herdr.registry import load_registry, require_workspace
@@ -95,8 +96,25 @@ def build_parser() -> argparse.ArgumentParser:
         "show", help="Show one dispatch contract.", parents=[common]
     )
     show_dispatch.add_argument("id")
+    attach = dispatch_sub.add_parser(
+        "attach",
+        help="Attach external evidence (a pull request URL) to a dispatch.",
+        parents=[common],
+    )
+    attach.add_argument("id")
+    attach.add_argument("--pr", required=True, help="Pull request URL opened by the worker.")
 
     sub.add_parser("inbox", help="List work waiting for human review.", parents=[common])
+    sub.add_parser(
+        "notes",
+        help="Rewrite control/notes.md from dispatches and receipts, then print it.",
+        parents=[common],
+    )
+    sub.add_parser(
+        "context",
+        help="Show the shared-context layout (docs/, internal/, media/).",
+        parents=[common],
+    )
 
     receipt = sub.add_parser("receipt", help="Record writeback evidence.", parents=[common])
     receipt_sub = receipt.add_subparsers(dest="receipt_command", required=True)
@@ -140,6 +158,10 @@ def _dispatch(args: argparse.Namespace) -> int:
         return _dispatch_command(args, root)
     if args.command == "inbox":
         return _inbox(args, root)
+    if args.command == "notes":
+        return _notes(args, root)
+    if args.command == "context":
+        return _context(args, root)
     if args.command == "receipt":
         return _receipt_command(args, root)
     raise ProjectHerdrError(f"unknown command {args.command}")
@@ -153,6 +175,7 @@ def _start(args: argparse.Namespace, root: ControlRoot) -> int:
             "project-herdr workspaces",
             "project-herdr status",
             "project-herdr inbox",
+            "project-herdr notes",
         ],
         "rule": "Coordinator sessions stay in this repo. Workers edit registered workspaces only.",
         "harnesses": sorted(KNOWN_HARNESSES),
@@ -247,6 +270,11 @@ def _dispatch_command(args: argparse.Namespace, root: ControlRoot) -> int:
         return 0
     if args.dispatch_command == "create":
         return _dispatch_create(args, root)
+    if args.dispatch_command == "attach":
+        item = mark_dispatch(root, get_dispatch(root, args.id), pr_url=args.pr)
+        write_notes(root)
+        _emit(args, item.as_dict(), f"{item.id}  {item.status}  {item.pr_url}")
+        return 0
     raise ProjectHerdrError(f"unknown dispatch command {args.dispatch_command}")
 
 
@@ -306,7 +334,9 @@ def _dispatch_create(
             herdr_result=result.reason,
         )
         if not result.ok:
+            write_notes(root)
             raise AdapterError(f"{result.reason}: {result.detail}")
+    write_notes(root)
     _emit(args, item.as_dict(), f"{item.id}  {item.status}  {item.workspace}")
     return 0
 
@@ -314,6 +344,37 @@ def _dispatch_create(
 def _inbox(args: argparse.Namespace, root: ControlRoot) -> int:
     items = build_inbox(root)
     _emit(args, [item.as_dict() for item in items], render_inbox(items))
+    return 0
+
+
+def _notes(args: argparse.Namespace, root: ControlRoot) -> int:
+    result = write_notes(root)
+    payload = {
+        "path": str(root.notes_file),
+        "archived": str(root.archived_file),
+        "archived_added": len(result.archived_added),
+        "notes": result.notes,
+    }
+    _emit(args, payload, result.notes.rstrip("\n"))
+    return 0
+
+
+def _context(args: argparse.Namespace, root: ControlRoot) -> int:
+    root.ensure_layout()
+    payload = {
+        "root": str(root.context_dir),
+        "docs": str(root.context_docs_dir),
+        "internal": str(root.context_internal_dir),
+        "media": str(root.context_media_dir),
+        "notes": str(root.notes_file),
+        "rule": (
+            "docs/ holds deliverables a human will open; internal/ holds worker reports "
+            "and agent-facing evidence; media/ holds screenshots and recordings."
+        ),
+    }
+    lines = [f"{key:10} {value}" for key, value in payload.items() if key != "rule"]
+    lines.append(payload["rule"])
+    _emit(args, payload, "\n".join(lines))
     return 0
 
 
@@ -334,6 +395,7 @@ def _receipt_command(args: argparse.Namespace, root: ControlRoot) -> int:
         "blocked": "blocked",
     }[receipt.verdict]
     mark_dispatch(root, item, status=status)  # type: ignore[arg-type]
+    write_notes(root)
     _emit(args, receipt.as_dict(), f"{receipt.dispatch_id}  {receipt.verdict}  {receipt.summary}")
     return 0
 

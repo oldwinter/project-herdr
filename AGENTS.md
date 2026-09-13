@@ -11,14 +11,18 @@
 3. `just workspaces`
 4. `just status`
 5. `just inbox`
+6. `just notes`
 
 ## 规则
 
 - 改产品文件前先有 dispatch 合同，cwd 必须是目标工作区。
-- 本仓只写 `control/` 下的登记、合同、收据。
+- 本仓只写 `control/` 下的登记、合同、收据，以及 `context/` 下的共享上下文。
+- 一个 dispatch 只装一条工作流；互不相关的工作分开派，不打包。
 - 默认不 push、merge、发布、发送、删除。
 - Herdr 只是可选 transport。没有 Herdr 时把合同标成 `ready` 并留下 worker prompt。
-- 产品仓的测试方法和架构偏好写进那个仓；这里只保留指针和跨仓教训。
+- 产品仓的测试方法和架构偏好写进那个仓；跨仓教训写 `context/docs/lessons.md`。
+- `control/notes.md` 是给人看的状态读数，由 CLI 从合同和收据重算；不要手改，也不要在里面写流水账。
+- worker 开了 PR 就 `dispatch attach --pr`，让 notes 带链接。
 - 优化/分角色模型看 `.cursor/rules/pstack-models.mdc`。
 
 ## Canonical Surface
@@ -27,6 +31,10 @@
 - `control/workspaces.local.toml`：本机私有覆盖，不提交
 - `control/dispatches/`：派工合同
 - `control/receipts/`：回写证据
+- `control/notes.md` / `control/archived.md`：状态读数与已完成归档（生成物）
+- `context/docs/`：人会打开的交付物
+- `context/internal/<dispatch>/`：worker 报告与 agent 侧证据
+- `context/media/`：截图、录屏
 - `src/project_herdr/`：CLI 与校验真源
 - `docs/architecture.md`：状态机与所有权
 

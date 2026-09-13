@@ -27,6 +27,14 @@ inbox *args:
     @{{python}} -m project_herdr --root . inbox "$@"
 
 [positional-arguments]
+notes *args:
+    @{{python}} -m project_herdr --root . notes "$@"
+
+[positional-arguments]
+context *args:
+    @{{python}} -m project_herdr --root . context "$@"
+
+[positional-arguments]
 dispatch *args:
     @{{python}} -m project_herdr --root . dispatch "$@"
 
