@@ -193,6 +193,7 @@ class CliTest(unittest.TestCase):
             self.assertIn(f"context/internal/{dispatch_id}/report.md", prompt)
             self.assertIn("One dispatch is one workstream", prompt)
             self.assertIn(f"project-herdr dispatch attach {dispatch_id} --pr", prompt)
+            self.assertIn(f"session update --dispatch {dispatch_id}", prompt)
 
     def test_doctor_lists_harness_kinds(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

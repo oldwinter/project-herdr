@@ -35,7 +35,7 @@ ready -> needs_review | blocked | done
 
 - 未完成的 dispatch 是 `- [ ]`；多个工作区时按 `## <workspace>` 分组。
 - `done` 的 dispatch 是 `- [x]`，只保留最新 3 条；更旧的追加进 `control/archived.md`（append-only，按 id 去重）。
-- 有收据时显示收据 summary，否则显示状态短语；`pr_url` 存在时追加 `[PR](url)`。
+- 进行中的 dispatch 优先显示最新 session step；否则有收据时显示收据 summary，再否则显示状态短语。`pr_url` 存在时追加 `[PR](url)`。
 
 ## Shared context
 
@@ -48,6 +48,20 @@ ready -> needs_review | blocked | done
 | `context/media/` | 截图、录屏 |
 
 产品仓自己的知识仍然留在产品仓的 AGENTS.md。
+
+## Session
+
+`session` 对应 Cursor Project 里 coordinator 对仍在跑的 worker 的增量读数。它不写收据、不改合同状态。
+
+| 命令 | 做什么 |
+| --- | --- |
+| `session update --dispatch <id> --step "..."` | worker 追加一条短步骤到 `context/internal/<id>/session.jsonl` |
+| `session show [id]` | 读日志；省略 id 时列出未完成 dispatch 的最新步骤 |
+| `session pull <id>` | 调 `herdr agent read`，只把相对上次 cursor 的新增文本写入同一 JSONL |
+
+`pull` 的 cursor 在 `control/runtime/<id>/session.cursor`（上次完整快照）。新文本是旧快照的前缀延长、滑动窗口重叠，或整段重置。没有 Herdr 会话、不在 Herdr pane、或没有 `herdr` 时 fail closed，不写文件。`--dry-run` 只报告。
+
+进行中的 dispatch（`drafted` / `ready` / `dispatched`）在 `notes.md` 里显示最新 step，而不是泛化的状态短语。
 
 ## Sync
 

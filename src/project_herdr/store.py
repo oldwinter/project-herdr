@@ -80,6 +80,12 @@ class ControlRoot:
     def prompt_file(self, dispatch_id: str) -> Path:
         return self.runtime_dir / dispatch_id / "prompt.md"
 
+    def session_log_file(self, dispatch_id: str) -> Path:
+        return self.worker_output_dir(dispatch_id) / "session.jsonl"
+
+    def session_cursor_file(self, dispatch_id: str) -> Path:
+        return self.runtime_dir / dispatch_id / "session.cursor"
+
     def ensure_layout(self) -> None:
         self.dispatches_dir.mkdir(parents=True, exist_ok=True)
         self.receipts_dir.mkdir(parents=True, exist_ok=True)

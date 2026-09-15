@@ -43,6 +43,10 @@ lesson *args:
     @{{python}} -m project_herdr --root . lesson "$@"
 
 [positional-arguments]
+session *args:
+    @{{python}} -m project_herdr --root . session "$@"
+
+[positional-arguments]
 dispatch *args:
     @{{python}} -m project_herdr --root . dispatch "$@"
 

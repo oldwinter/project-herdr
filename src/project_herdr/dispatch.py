@@ -61,6 +61,17 @@ Refuse any unauthorized external action.
 
 {acceptance}
 
+## Progress
+
+While working, report a short step. This does not finish the dispatch:
+
+```
+PYTHONPATH=src python3 -m project_herdr --root . session update --dispatch {id} --step "..."
+```
+
+The coordinator can `session show {id}` at any time, or `session pull {id}` to
+read only new Herdr pane output since the last pull.
+
 ## Writeback
 
 When finished, run this from the control-plane root `{control_root}`:
