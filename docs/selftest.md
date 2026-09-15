@@ -18,7 +18,7 @@ just context
 应该看到：
 
 - `just check`：全部 OK。
-- `just start`：一句规则 + 下一步命令列表，最后一行是 `project-herdr notes`。
+- `just start`：一句规则 + 下一步命令列表，最后一行是 `project-herdr session show`。
 - `just doctor`：`harnesses  claude codex droid grok hermes pi`；`herdr` 一行是路径或 `missing (optional)`。
 - `just context`：`context/docs` `context/internal` `context/media` 三个目录都存在。
 
@@ -71,7 +71,17 @@ just notes
 
 - 输出 `d-<日期>-<slug>  ready  skills`。
 - `control/notes.md` 里有 `- [ ] [d-...](dispatches/d-....toml) ... — ready, waiting for a worker`。
-- `control/runtime/d-.../prompt.md` 存在，里面有 `## Output` 段，指向 `context/internal/d-.../report.md`，还有 `dispatch attach ... --pr` 的用法。
+- `control/runtime/d-.../prompt.md` 存在，里面有 `## Output` 段，指向 `context/internal/d-.../report.md`，还有 `session update` 和 `dispatch attach ... --pr` 的用法。
+
+干活过程中先报一步（合同仍是 `ready`）：
+
+```bash
+just session update --dispatch d-... --step "改 README 第一行"
+just session show d-...
+just notes
+```
+
+应该看到：`session.jsonl` 多一行 `step`；`notes.md` 那一行变成 `— 改 README 第一行`，状态还是 ready。
 
 现在把 prompt 贴给任意一个 harness（Codex app、Claude Code、Pi 都行），在 `skills` 仓里干活。干完回到本仓：
 
@@ -123,6 +133,16 @@ just dispatch create --workspace skills --objective "跑一遍 just test 并汇�
 
 应该看到：右侧新开一个 pane，cwd 是 skills 仓，harness 是 `codex`，prompt 已提交；本仓命令立即返回，合同状态 `dispatched`。不在 Herdr pane 里跑同一条，应该报 `not_in_herdr_pane`，合同留在 `ready`。
 
+对一个已 `dispatched` 的合同：
+
+```bash
+just session pull d-... --dry-run
+just session pull d-...
+just session show d-...
+```
+
+应该看到：第一次 pull 写入增量 readout；立刻再 pull 是 `unchanged`，`session.jsonl` 不再变。不在 Herdr pane 里跑 `session pull` 应报 `not_in_herdr_pane`，日志一个字节都没变。
+
 ## F. 记教训（1 分钟）
 
 ```bash
@@ -135,7 +155,8 @@ cat context/docs/lessons.md
 | 层 | 通过标准 |
 | --- | --- |
 | coordinator 不写代码 | 全程本仓只多了 `control/` `context/` 下的文件；产品仓 diff 全在产品仓 |
-| notes | 每次 create / attach / receipt / sync 后 `control/notes.md` 立刻反映当前状态，且没有历史流水 |
+| notes | 每次 create / attach / receipt / sync / session update 后 `control/notes.md` 立刻反映当前状态，且没有历史流水 |
+| session | `update` 写 step 不改状态；`pull` 只记 Herdr 新增输出，没 Herdr 不乱动 |
 | shared context | worker 报告落在 `context/internal/<id>/report.md`，教训在 `context/docs/lessons.md` |
 | PR 回流 | `sync` 能把 merged 变 done、CI 红变 needs_review，没 `gh` 不乱动 |
 | harness 可换 | `--harness pi` / `codex` / `claude` 各派一次，prompt 一致，只有 `--kind` 不同 |

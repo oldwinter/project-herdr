@@ -13,6 +13,14 @@ Runner = Callable[[Sequence[str], Mapping[str, str]], tuple[int, str, str]]
 
 
 @dataclass(frozen=True)
+class ReadResult:
+    ok: bool
+    text: str = ""
+    reason: str = ""
+    detail: str = ""
+
+
+@dataclass(frozen=True)
 class HerdrAdapter:
     env: Mapping[str, str]
     runner: Runner | None = None
@@ -65,7 +73,7 @@ class HerdrAdapter:
                 reason="pane_prepared",
                 detail=(split_out or "").strip() or f"split cwd={request.workspace_path}",
             )
-        agent = _agent_name(request.dispatch.id)
+        agent = agent_name_for(request.dispatch.id)
         start_code, start_out, start_err = self._run(
             [
                 herdr,
@@ -119,6 +127,40 @@ class HerdrAdapter:
             detail=f"agent={agent} pane={pane_id}",
         )
 
+    def read_agent(self, agent: str, *, lines: int = 120) -> ReadResult:
+        if self.env.get("HERDR_ENV") != "1":
+            return ReadResult(
+                ok=False,
+                reason="not_in_herdr_pane",
+                detail="Read a live pane from a Herdr-managed pane, or use session update.",
+            )
+        herdr = self.which("herdr")
+        if not herdr:
+            return ReadResult(ok=False, reason="herdr_missing", detail="herdr is not on PATH.")
+        code, out, err = self._run(
+            [
+                herdr,
+                "agent",
+                "read",
+                agent,
+                "--source",
+                "recent-unwrapped",
+                "--lines",
+                str(lines),
+            ]
+        )
+        if code != 0:
+            return ReadResult(
+                ok=False,
+                reason="herdr_read_failed",
+                detail=(err or out).strip() or f"exit {code}",
+            )
+        try:
+            text = extract_read_text(out)
+        except ValueError as exc:
+            return ReadResult(ok=False, reason="herdr_read_invalid", detail=str(exc))
+        return ReadResult(ok=True, text=text, reason="read")
+
     def _run(self, argv: Sequence[str]) -> tuple[int, str, str]:
         if self.runner is not None:
             return self.runner(argv, self.env)
@@ -150,8 +192,33 @@ def _pane_id(stdout: str) -> str | None:
     return str(pane_id) if pane_id else None
 
 
-def _agent_name(dispatch_id: str) -> str:
+def agent_name_for(dispatch_id: str) -> str:
     compact = dispatch_id.replace("-", "")
     if not compact or not compact[0].isalpha():
         compact = "w" + compact
     return compact[:32]
+
+
+def extract_read_text(stdout: str) -> str:
+    text = stdout.strip()
+    if not text:
+        return ""
+    try:
+        payload = json.loads(text)
+    except json.JSONDecodeError:
+        return stdout
+    if not isinstance(payload, dict):
+        return stdout
+    result = payload.get("result")
+    if isinstance(result, str):
+        return result
+    if not isinstance(result, dict):
+        raise ValueError("herdr agent read JSON missing result object")
+    for key in ("text", "output", "content", "snapshot"):
+        value = result.get(key)
+        if isinstance(value, str):
+            return value
+    lines = result.get("lines")
+    if isinstance(lines, list):
+        return "\n".join(str(item) for item in lines)
+    raise ValueError("herdr agent read JSON has no text field")

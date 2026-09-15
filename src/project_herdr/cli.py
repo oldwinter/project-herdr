@@ -25,6 +25,12 @@ from project_herdr.overlay import load_overlay, resolve_workspace_path
 from project_herdr.receipts import record_receipt
 from project_herdr.registry import load_registry, require_workspace
 from project_herdr.render import render_dispatches, render_inbox, render_status, render_workspaces
+from project_herdr.session import (
+    pull_session,
+    render_session,
+    show_session,
+    update_session,
+)
 from project_herdr.status import collect_status
 from project_herdr.store import ControlRoot
 from project_herdr.sync import sync_dispatches
@@ -132,6 +138,33 @@ def build_parser() -> argparse.ArgumentParser:
     lesson_add.add_argument("text")
     lesson_add.add_argument("--workspace", default="", help="Workspace the lesson came from.")
 
+    session = sub.add_parser(
+        "session",
+        help="Incremental worker-session readout (steps and optional Herdr pane pull).",
+        parents=[common],
+    )
+    session_sub = session.add_subparsers(dest="session_command", required=True)
+    session_update = session_sub.add_parser(
+        "update",
+        help="Append a worker step. Does not finish the dispatch or write a receipt.",
+        parents=[common],
+    )
+    session_update.add_argument("--dispatch", required=True)
+    session_update.add_argument("--step", required=True)
+    session_show = session_sub.add_parser(
+        "show",
+        help="Show the session log for one dispatch, or latest steps for live dispatches.",
+        parents=[common],
+    )
+    session_show.add_argument("id", nargs="?", default="")
+    session_pull = session_sub.add_parser(
+        "pull",
+        help="Read only new Herdr pane output since the last pull. Optional; fails closed without Herdr.",
+        parents=[common],
+    )
+    session_pull.add_argument("id")
+    session_pull.add_argument("--dry-run", action="store_true", help="Report the increment, write nothing.")
+
     receipt = sub.add_parser("receipt", help="Record writeback evidence.", parents=[common])
     receipt_sub = receipt.add_subparsers(dest="receipt_command", required=True)
     record = receipt_sub.add_parser(
@@ -182,6 +215,8 @@ def _dispatch(args: argparse.Namespace) -> int:
         return _sync(args, root)
     if args.command == "lesson":
         return _lesson(args, root)
+    if args.command == "session":
+        return _session_command(args, root)
     if args.command == "receipt":
         return _receipt_command(args, root)
     raise ProjectHerdrError(f"unknown command {args.command}")
@@ -196,6 +231,7 @@ def _start(args: argparse.Namespace, root: ControlRoot) -> int:
             "project-herdr status",
             "project-herdr inbox",
             "project-herdr notes",
+            "project-herdr session show",
         ],
         "rule": "Coordinator sessions stay in this repo. Workers edit registered workspaces only.",
         "harnesses": sorted(KNOWN_HARNESSES),
@@ -351,7 +387,7 @@ def _dispatch_create(
             item,
             status="dispatched" if result.ok else "ready",
             herdr_requested=True,
-            herdr_result=result.reason,
+            herdr_result=result.detail if result.ok and result.reason == "dispatched" else result.reason,
         )
         if not result.ok:
             write_notes(root)
@@ -421,6 +457,49 @@ def _lesson(args: argparse.Namespace, root: ControlRoot) -> int:
         _emit(args, payload, line)
         return 0
     raise ProjectHerdrError(f"unknown lesson command {args.lesson_command}")
+
+
+def _session_command(
+    args: argparse.Namespace,
+    root: ControlRoot,
+    adapter: HerdrAdapter | None = None,
+) -> int:
+    if args.session_command == "update":
+        entry = update_session(root, args.dispatch, args.step)
+        write_notes(root)
+        _emit(args, entry.as_dict(), f"{args.dispatch}  step  {entry.step}")
+        return 0
+    if args.session_command == "show":
+        views = show_session(root, args.id or None)
+        if args.id:
+            payload = views[0].as_dict() if views else {}
+        else:
+            payload = [
+                {
+                    "dispatch_id": view.dispatch_id,
+                    "status": view.status,
+                    "latest_step": view.latest_step,
+                    "entries": len(view.entries),
+                }
+                for view in views
+            ]
+        _emit(args, payload, render_session(views))
+        return 0
+    if args.session_command == "pull":
+        result = pull_session(root, args.id, adapter=adapter, dry_run=args.dry_run)
+        if result.action == "appended" and not args.dry_run:
+            write_notes(root)
+        text = f"{result.dispatch_id}  {result.action}  {result.agent}"
+        if result.increment:
+            preview = " ".join(result.increment.split())
+            if len(preview) > 80:
+                preview = preview[:79] + "…"
+            text = f"{text}  {preview}"
+        if result.detail:
+            text = f"{text}  {result.detail}"
+        _emit(args, result.as_dict(), text)
+        return 0
+    raise ProjectHerdrError(f"unknown session command {args.session_command}")
 
 
 def _receipt_command(args: argparse.Namespace, root: ControlRoot) -> int:

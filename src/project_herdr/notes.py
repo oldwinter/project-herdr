@@ -17,6 +17,7 @@ from pathlib import Path
 from project_herdr.dispatch import list_dispatches
 from project_herdr.model import Dispatch, Receipt
 from project_herdr.receipts import latest_receipt
+from project_herdr.session import latest_step
 from project_herdr.store import ControlRoot
 
 COMPLETED_CAP = 3
@@ -92,16 +93,20 @@ def _item(root: ControlRoot, item: Dispatch, *, checked: bool, show_workspace: b
     parts = [f"- {box} {label}"]
     if show_workspace:
         parts.append(f"`{item.workspace}`")
-    parts.append(_readout(item, receipt))
+    parts.append(_readout(root, item, receipt))
     if item.pr_url:
         parts.append(f"[PR]({item.pr_url})")
     return " ".join(parts)
 
 
-def _readout(item: Dispatch, receipt: Receipt | None) -> str:
+def _readout(root: ControlRoot, item: Dispatch, receipt: Receipt | None) -> str:
     objective = " ".join(item.objective.split())
     if len(objective) > 72:
         objective = objective[:71] + "…"
+    if item.status in {"drafted", "ready", "dispatched"}:
+        step = latest_step(root, item.id)
+        if step:
+            return f"{objective} — {step}"
     if receipt is not None and receipt.summary:
         summary = " ".join(receipt.summary.split())
         return f"{objective} — {summary}"

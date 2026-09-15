@@ -13,6 +13,7 @@
 | PR 回到 coordinator | `dispatch attach --pr`，notes 里带链接 |
 | Subscriptions 跟 PR | `sync`：用 `gh` 把 PR merged / closed / CI failing 拉回合同并写收据（可选，没 `gh` 就不动） |
 | Shared context 随项目长 | `lesson add`：跨仓教训追加到 `context/docs/lessons.md` |
+| Worker session 增量读数 | `session update` 写步骤；`session show` 读日志；`session pull` 从 Herdr pane 只拉上次之后的新输出 |
 | Cloud by default、Slack / cron 触发 | 不做。Herdr pane 本机跑；定时/事件仍由既有 automation 拥有 |
 
 ```text
@@ -86,6 +87,15 @@ PR 的后续状态不用手记。装好并登录 `gh` 后：
 ```bash
 just sync --dry-run   # 先看会改什么
 just sync             # merged → done，closed → blocked，CI 红 → needs_review，各写一条收据
+```
+
+工人还在跑时，不必等最终收据：
+
+```bash
+just session update --dispatch d-20260913-draft-chapter-one --step "写完开头"
+just session show d-20260913-draft-chapter-one
+just session pull d-20260913-draft-chapter-one   # 可选；从 Herdr pane 只读新增输出
+just notes                                      # 进行中的行显示最新 step
 ```
 
 学到的跨仓经验：

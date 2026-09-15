@@ -62,6 +62,26 @@ class HerdrAdapterTest(unittest.TestCase):
         self.assertEqual(calls[2][1:3], ["agent", "prompt"])
         self.assertNotIn("--wait", calls[2])
 
+    def test_read_agent_extracts_text_and_fails_closed(self) -> None:
+        def runner(argv, env):
+            self.assertEqual(argv[1:3], ["agent", "read"])
+            self.assertIn("recent-unwrapped", argv)
+            return 0, json.dumps({"result": {"text": "pane output"}}), ""
+
+        adapter = HerdrAdapter(
+            env={"HERDR_ENV": "1"},
+            runner=runner,
+            which=lambda _: "/usr/bin/herdr",
+        )
+        result = adapter.read_agent("wdraft")
+        self.assertTrue(result.ok)
+        self.assertEqual(result.text, "pane output")
+
+        missing = HerdrAdapter(env={"HERDR_ENV": "1"}, which=lambda _: None)
+        self.assertEqual(missing.read_agent("wdraft").reason, "herdr_missing")
+        outside = HerdrAdapter(env={}, which=lambda _: "/usr/bin/herdr")
+        self.assertEqual(outside.read_agent("wdraft").reason, "not_in_herdr_pane")
+
     def test_rejects_unknown_harness_before_herdr(self) -> None:
         adapter = HerdrAdapter(env={"HERDR_ENV": "1"}, which=lambda _: "/usr/bin/herdr")
         result = adapter.enqueue(_request(harness="not-a-kind"))

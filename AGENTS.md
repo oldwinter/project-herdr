@@ -12,6 +12,7 @@
 4. `just status`
 5. `just inbox`
 6. `just notes`
+7. `just session show`
 
 ## 规则
 
@@ -22,6 +23,7 @@
 - Herdr 只是可选 transport。没有 Herdr 时把合同标成 `ready` 并留下 worker prompt。
 - 产品仓的测试方法和架构偏好写进那个仓；跨仓教训写 `context/docs/lessons.md`。
 - `control/notes.md` 是给人看的状态读数，由 CLI 从合同和收据重算；不要手改，也不要在里面写流水账。
+- worker 还在跑时用 `just session update --dispatch <id> --step "..."` 写增量步骤；coordinator 用 `just session show` 看，或 `just session pull <id>` 从 Herdr pane 只拉新输出。步骤不改合同状态。
 - worker 开了 PR 就 `dispatch attach --pr`，让 notes 带链接；之后用 `just sync` 把 PR 合并 / 关闭 / CI 失败拉回合同（需要已登录的 `gh`，没有就 fail closed）。
 - 学到跨仓通用的东西用 `just lesson add "..." --workspace <id>`，不要塞进聊天记录。
 - 优化/分角色模型看 `.cursor/rules/pstack-models.mdc`。
