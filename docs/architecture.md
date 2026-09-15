@@ -49,6 +49,20 @@ ready -> needs_review | blocked | done
 
 产品仓自己的知识仍然留在产品仓的 AGENTS.md。
 
+## Sync
+
+`sync` 是 Cursor Project "follow all your PRs" 的轮询版。对每个 `pr_url` 非空且未 `done` 的 dispatch 调一次 `gh pr view --json state,mergedAt,statusCheckRollup`，然后：
+
+| 观察到 | 收据 | 状态 |
+| --- | --- | --- |
+| merged | passed "PR merged" | done |
+| closed 未合并 | blocked "PR closed without merge" | blocked |
+| open 且任一 check 失败 | needs_review "CI failing on PR" | needs_review（只记一次） |
+| open 且 pending / 全绿 | 不写 | 不变 |
+| `gh` 出错 | 不写 | 不变，结果里给出 `probe_failed` 和原因 |
+
+没有 `gh` 且存在待同步的 dispatch 时报 `AdapterError`（exit 3），不写任何文件。`--dry-run` 只报告。
+
 ## Path resolution
 
 1. `PROJECT_HERDR_PATH_<ID>`

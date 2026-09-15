@@ -11,7 +11,9 @@
 | Shared context（Agent Store） | `context/docs` `context/internal` `context/media`；产品规则仍留在目标仓 |
 | 一个 worker 一条工作流，kickoff 写明输出位置 | worker prompt 自带 `context/internal/<dispatch>/report.md` 目标路径 |
 | PR 回到 coordinator | `dispatch attach --pr`，notes 里带链接 |
-| Cloud + subscriptions | 本机 Herdr pane；定时/事件仍由既有 automation 拥有 |
+| Subscriptions 跟 PR | `sync`：用 `gh` 把 PR merged / closed / CI failing 拉回合同并写收据（可选，没 `gh` 就不动） |
+| Shared context 随项目长 | `lesson add`：跨仓教训追加到 `context/docs/lessons.md` |
+| Cloud by default、Slack / cron 触发 | 不做。Herdr pane 本机跑；定时/事件仍由既有 automation 拥有 |
 
 ```text
 你 ──► project-herdr（coordinator）
@@ -78,6 +80,21 @@ just notes
 ```
 
 `control/notes.md` 每次 create / attach / receipt 都会自动重写，`just notes` 只是手动刷新并打印。共享上下文的三个目录用 `just context` 查看。
+
+PR 的后续状态不用手记。装好并登录 `gh` 后：
+
+```bash
+just sync --dry-run   # 先看会改什么
+just sync             # merged → done，closed → blocked，CI 红 → needs_review，各写一条收据
+```
+
+学到的跨仓经验：
+
+```bash
+just lesson add "novel 仓的测试要先 just seed" --workspace novel
+```
+
+想从零跑一遍完整流程，看 `docs/selftest.md`。
 
 CLI 入口是 `project-herdr` / `ph`。在 checkout 里也可以：
 
